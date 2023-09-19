@@ -1,29 +1,37 @@
-const http = require("http");
 const fs = require("fs");
-
 const index = fs.readFileSync("index.html", "utf-8");
-const data = fs.readFileSync("db.json", "utf-8");
+const data = JSON.parse(fs.readFileSync("db.json", "utf-8"));
+const products = data.products;
 
+const express = require("express");
 const hostname = "127.0.0.1";
 const port = 3000;
 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
+const server = express();
 
-  switch (req.url) {
-    case "/":
-      res.setHeader("Content-Type", "text/html");
-      res.end(index);
-      break;
-    case "/api":
-      res.setHeader("Content-Type", "application/json");
-      res.end(data);
-      break;
-    default:
-      res.writeHead(404);
-      res.end();
-      break;
-  }
+// API - Endpoint - Route
+server.get("/", (req, res) => {
+  res.json({ type: "GET" });
+});
+
+server.post("/", (req, res) => {
+  res.json({ type: "POST" });
+});
+
+server.put("/", (req, res) => {
+  res.json({ type: "PUT" });
+});
+
+server.patch("/", (req, res) => {
+  res.json({ type: "PATCH" });
+});
+
+server.delete("/", (req, res) => {
+  res.json({ type: "DELETE" });
+});
+
+server.get("/demo", (req, res) => {
+  res.send("Hello World");
 });
 
 server.listen(port, hostname, () => {
