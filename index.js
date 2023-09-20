@@ -1,5 +1,4 @@
 const fs = require("fs");
-const index = fs.readFileSync("index.html", "utf-8");
 const data = JSON.parse(fs.readFileSync("db.json", "utf-8"));
 const products = data.products;
 
@@ -12,52 +11,56 @@ const morgan = require("morgan");
 
 // ✅ Built-in middleware
 server.use(express.json()); // bodyParser
-// server.use(express.urlencoded());
 server.use(morgan("default"));
 server.use(express.static("public"));
 
-// ✅ Application-level middleware
-server.use((req, res, next) => {
-  console.log({
-    date: new Date(),
-    method: req.method,
-    ip: req.ip,
-    hostname: req.hostname,
-  });
-  next();
-});
-
-// ✅ Router-level middleware
-const auth = (req, res, next) => {
-  // req.query.password === "123" ? next() : res.sendStatus(401);
-  // req.body.password === "123" ? next() : res.sendStatus(401); // 👈 bcz testing params
-  next();
-};
-
 // ✅ API - Endpoint - Route
-server.get("/product/:id", auth, (req, res) => {
-  console.log(req.params);
-  res.json({ type: "GET" });
+
+// 👉 Products
+// 👉 API ROOT, base URL
+
+// ✅ CRUD
+// 👉 Create POST /products
+server.post("/products", (req, res) => {
+  products.push(req.body);
+  res.status(201).json(req.body);
 });
 
-server.post("/", auth, (req, res) => {
-  res.json({ type: "POST" });
+// 👉 Read GET /products
+server.get("/products", (req, res) => {
+  res.status(200).json(products);
 });
 
-server.put("/", (req, res) => {
-  res.json({ type: "PUT" });
+// 👉 ReadOne GET /products/:id
+server.get("/products/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const product = products.find((p) => p.id === id);
+  res.status(200).json(product);
 });
 
-server.patch("/", (req, res) => {
-  res.json({ type: "PATCH" });
+// 👉 Update UPDATE /products/:id
+server.put("/products/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const productIndex = products.findIndex((p) => p.id === id);
+  products.splice(productIndex, 1, { ...req.body, id: id });
+  res.status(205).json({ type: "Updated" });
 });
 
-server.delete("/", (req, res) => {
-  res.json({ type: "DELETE" });
+// 👉 Patch  PATCH /products/:id
+server.patch("/products/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const productIndex = products.findIndex((p) => p.id === id);
+  const product = products[productIndex];
+  products.splice(productIndex, 1, { ...product, ...req.body });
+  res.status(206).json({ type: "Updated One" });
 });
 
-server.get("/demo", (req, res) => {
-  res.send("Hello World");
+// 👉 Delete  DELETE /products/:id
+server.delete("/products/:id", (req, res) => {
+  const id = Number(req.body.id);
+  const productIndex = products.find((p) => p.id === id);
+  products.splice(productIndex, 1);
+  res.status(204).json({ type: "Deleted" });
 });
 
 server.listen(port, hostname, () => {
