@@ -10,12 +10,7 @@ const {
 
 const router = express.Router();
 
-router
-  .post("/", CREATE)
-  .get("/", GETALL)
-  .get("/:id", GET)
-  .put("/:id", REPLACE)
-  .patch("/:id", UPDATE)
-  .delete("/:id", DELETE);
+router.route("/").post(CREATE).get(GETALL);
+router.route("/:id").get(GET).put(REPLACE).patch(UPDATE).delete(DELETE);
 
 module.exports = router;
