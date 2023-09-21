@@ -6,7 +6,7 @@ const {
   REPLACE,
   UPDATE,
   DELETE,
-} = require("../controller/product");
+} = require("../controller/user");
 
 const router = express.Router();
 

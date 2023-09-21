@@ -1,6 +1,6 @@
 const fs = require("fs");
 const data = JSON.parse(fs.readFileSync("db.json", "utf-8"));
-const dbData = data.products;
+const dbData = data.users;
 
 const CREATE = (req, res) => {
   dbData.push(req.body);
