@@ -58,7 +58,7 @@ server.patch("/products/:id", (req, res) => {
 // 👉 Delete  DELETE /products/:id
 server.delete("/products/:id", (req, res) => {
   const id = Number(req.params.id);
-  const productIndex = products.find((p) => p.id === id);
+  const productIndex = products.findIndex((p) => p.id === id);
   products.splice(productIndex, 1);
   res.status(204).json({ type: "Deleted" });
 });
