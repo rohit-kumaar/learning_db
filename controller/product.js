@@ -1,10 +1,14 @@
-const fs = require("fs");
-const data = JSON.parse(fs.readFileSync("db.json", "utf-8"));
-const dbData = data.products;
+const Product = require("../model/product");
 
 const CREATE = (req, res) => {
-  dbData.push(req.body);
-  res.status(201).json(req.body);
+  const product = new Product(req.body);
+
+  try {
+    product.save();
+    res.status(201).json(req.body);
+  } catch (error) {
+    res.status(400).json(error);
+  }
 };
 
 const GETALL = (req, res) => {
