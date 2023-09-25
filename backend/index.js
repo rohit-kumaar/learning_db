@@ -1,6 +1,7 @@
 require("dotenv").config();
-const mongoose = require("mongoose");
 const express = require("express");
+const mongoose = require("mongoose");
+
 const server = express();
 
 main().catch((err) => console.log(err));
@@ -16,6 +17,7 @@ const host = process.env.HOST;
 const port = process.env.PORT;
 
 // ✅ Built-in middleware
+
 server.use(express.json()); // bodyParser
 
 server.use("/products", productRouter);
