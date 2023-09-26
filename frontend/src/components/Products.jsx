@@ -1,9 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { API } from "../config/config";
-import { Link } from "react-router-dom";
 import { AiFillEdit } from "react-icons/ai";
 import { MdProductionQuantityLimits } from "react-icons/md";
+import { Link } from "react-router-dom";
+import { API } from "../config/config";
 
 function Products() {
   const [products, setProducts] = useState([]);
@@ -53,7 +53,11 @@ function Products() {
                     {product.title}
                   </h1>
 
-                  <Link to="#" title="Update" className="p-1 text-red-700">
+                  <Link
+                    to={`update-product/${product._id}`}
+                    title="Update"
+                    className="p-1 text-red-700"
+                  >
                     <AiFillEdit />
                   </Link>
                 </div>
