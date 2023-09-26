@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-
+const cors = require("cors");
 const server = express();
 
 main().catch((err) => console.log(err));
@@ -17,7 +17,7 @@ const host = process.env.HOST;
 const port = process.env.PORT;
 
 // ✅ Built-in middleware
-
+server.use(cors());
 server.use(express.json()); // bodyParser
 
 server.use("/products", productRouter);

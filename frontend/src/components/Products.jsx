@@ -1,16 +1,16 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { API } from "../config/config";
+import { Link } from "react-router-dom";
 
 function Products() {
-  const URL = `http://127.0.0.1:8080/products`;
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     axios
-      .get(URL)
+      .get(`${API}/products`)
       .then((res) => {
-        // setProducts(res.data);
-        console.log(res.data);
+        setProducts(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -18,123 +18,66 @@ function Products() {
   }, []);
 
   return (
-    <div className="max-w-[1380px] w-full p-4 mx-auto ">
-      <div className="flex flex-col gap-10">
-        <h1 className="text-4xl text-center">Products</h1>
+    <div className="flex flex-col gap-10">
+      <div className="flex items-center justify-between">
+        <h1 className="text-4xl text-center">Product's</h1>
 
-        <div className="grid grid-cols-3 gap-5">
-          <div className="max-w-md  bg-white shadow-lg rounded-lg overflow-hidden">
-            <img
-              src="https://i.dummyjson.com/data/products/1/thumbnail.jpg"
-              alt="iPhone 9"
-              className="w-full h-64 object-cover"
-            />
-            <div className="p-4">
-              <h1 className="text-2xl font-semibold text-gray-800">iPhone 9</h1>
-              <p className="text-gray-600 mt-2">
-                An apple mobile which is nothing like apple
-              </p>
-              <div className="mt-3 flex items-center justify-between">
-                <span className="text-xl text-gray-800">$549</span>
-                <span className="text-sm text-gray-600">Rating: 4.69</span>
-              </div>
-              <div className="mt-2 flex items-center justify-between">
-                <span className="text-sm text-gray-600">In Stock: 94</span>
-                <span className="text-sm text-green-500">12.96% Off</span>
-              </div>
-              <div className="mt-4">
-                <span className="text-sm text-gray-600">Brand: Apple</span>
-                <span className="text-sm text-gray-600 ml-4">
-                  Category: Smartphones
-                </span>
+        <Link
+          to="/add-product"
+          className="bg-blue-500 px-3 py-2 font-semibold rounded-md text-white cursor-pointer border border-blue-500 hover:border-blue-500 hover:bg-white hover:text-blue-500 transition-all delay-150 ease-in-out "
+        >
+          Add Product
+        </Link>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {products?.map((product) => {
+          return (
+            <div
+              key={product._id}
+              className="xl:max-w-md  bg-white shadow-lg rounded-lg overflow-hidden"
+            >
+              <img
+                loading="lazy"
+                src={product.thumbnail}
+                alt={product.title}
+                title={product.title}
+                className="w-full h-64 xl:object-cover"
+              />
+
+              <div className="p-4">
+                <h1 className="text-2xl font-semibold text-gray-800">
+                  {product.title}
+                </h1>
+                <p className="text-gray-600 mt-2">{product.description}</p>
+                <div className="mt-3 flex items-center justify-between">
+                  <span className="text-xl text-gray-800">
+                    ${product.price}
+                  </span>
+                  <span className="text-sm text-gray-600">
+                    Rating: {product.rating}
+                  </span>
+                </div>
+                <div className="mt-2 flex items-center justify-between">
+                  <span className="text-sm text-gray-600">
+                    In Stock: {product.stock}
+                  </span>
+                  <span className="text-sm text-green-500">
+                    {product.discountPercentage}% Off
+                  </span>
+                </div>
+                <div className="mt-4">
+                  <span className="text-sm text-gray-600">
+                    Brand: {product.brand}
+                  </span>
+                  <span className="text-sm text-gray-600 ml-4">
+                    Category: {product.category}
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
-
-          <div className="max-w-md  bg-white shadow-lg rounded-lg overflow-hidden">
-            <img
-              src="https://i.dummyjson.com/data/products/1/thumbnail.jpg"
-              alt="iPhone 9"
-              className="w-full h-64 object-cover"
-            />
-            <div className="p-4">
-              <h1 className="text-2xl font-semibold text-gray-800">iPhone 9</h1>
-              <p className="text-gray-600 mt-2">
-                An apple mobile which is nothing like apple
-              </p>
-              <div className="mt-3 flex items-center justify-between">
-                <span className="text-xl text-gray-800">$549</span>
-                <span className="text-sm text-gray-600">Rating: 4.69</span>
-              </div>
-              <div className="mt-2 flex items-center justify-between">
-                <span className="text-sm text-gray-600">In Stock: 94</span>
-                <span className="text-sm text-green-500">12.96% Off</span>
-              </div>
-              <div className="mt-4">
-                <span className="text-sm text-gray-600">Brand: Apple</span>
-                <span className="text-sm text-gray-600 ml-4">
-                  Category: Smartphones
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div className="max-w-md  bg-white shadow-lg rounded-lg overflow-hidden">
-            <img
-              src="https://i.dummyjson.com/data/products/1/thumbnail.jpg"
-              alt="iPhone 9"
-              className="w-full h-64 object-cover"
-            />
-            <div className="p-4">
-              <h1 className="text-2xl font-semibold text-gray-800">iPhone 9</h1>
-              <p className="text-gray-600 mt-2">
-                An apple mobile which is nothing like apple
-              </p>
-              <div className="mt-3 flex items-center justify-between">
-                <span className="text-xl text-gray-800">$549</span>
-                <span className="text-sm text-gray-600">Rating: 4.69</span>
-              </div>
-              <div className="mt-2 flex items-center justify-between">
-                <span className="text-sm text-gray-600">In Stock: 94</span>
-                <span className="text-sm text-green-500">12.96% Off</span>
-              </div>
-              <div className="mt-4">
-                <span className="text-sm text-gray-600">Brand: Apple</span>
-                <span className="text-sm text-gray-600 ml-4">
-                  Category: Smartphones
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div className="max-w-md  bg-white shadow-lg rounded-lg overflow-hidden">
-            <img
-              src="https://i.dummyjson.com/data/products/1/thumbnail.jpg"
-              alt="iPhone 9"
-              className="w-full h-64 object-cover"
-            />
-            <div className="p-4">
-              <h1 className="text-2xl font-semibold text-gray-800">iPhone 9</h1>
-              <p className="text-gray-600 mt-2">
-                An apple mobile which is nothing like apple
-              </p>
-              <div className="mt-3 flex items-center justify-between">
-                <span className="text-xl text-gray-800">$549</span>
-                <span className="text-sm text-gray-600">Rating: 4.69</span>
-              </div>
-              <div className="mt-2 flex items-center justify-between">
-                <span className="text-sm text-gray-600">In Stock: 94</span>
-                <span className="text-sm text-green-500">12.96% Off</span>
-              </div>
-              <div className="mt-4">
-                <span className="text-sm text-gray-600">Brand: Apple</span>
-                <span className="text-sm text-gray-600 ml-4">
-                  Category: Smartphones
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
+          );
+        })}
       </div>
     </div>
   );

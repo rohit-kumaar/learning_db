@@ -19,7 +19,7 @@ const productSchema = new Schema({
   brand: { type: String, required: true },
   category: { type: String, required: true },
   thumbnail: { type: String, required: true },
-  images: [String],
+  // images: [String],
 });
 
 const Product = mongoose.model("Product", productSchema);
