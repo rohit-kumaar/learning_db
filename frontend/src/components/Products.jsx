@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { API } from "../config/config";
 import { Link } from "react-router-dom";
+import { AiFillEdit } from "react-icons/ai";
+import { MdProductionQuantityLimits } from "react-icons/md";
 
 function Products() {
   const [products, setProducts] = useState([]);
@@ -24,9 +26,9 @@ function Products() {
 
         <Link
           to="/add-product"
-          className="bg-blue-500 px-3 py-2 font-semibold rounded-md text-white cursor-pointer border border-blue-500 hover:border-blue-500 hover:bg-white hover:text-blue-500 transition-all delay-150 ease-in-out "
+          className="bg-blue-500 px-3 py-2 font-semibold rounded-md text-white cursor-pointer border border-blue-500 hover:border-blue-500 hover:bg-white hover:text-blue-500 transition-all delay-150 ease-in-out text-xl"
         >
-          Add Product
+          <MdProductionQuantityLimits />
         </Link>
       </div>
 
@@ -46,9 +48,16 @@ function Products() {
               />
 
               <div className="p-4">
-                <h1 className="text-2xl font-semibold text-gray-800">
-                  {product.title}
-                </h1>
+                <div className="flex items-center justify-between">
+                  <h1 className="text-2xl font-semibold text-gray-800">
+                    {product.title}
+                  </h1>
+
+                  <Link to="#" title="Update" className="p-1 text-red-700">
+                    <AiFillEdit />
+                  </Link>
+                </div>
+
                 <p className="text-gray-600 mt-2">{product.description}</p>
                 <div className="mt-3 flex items-center justify-between">
                   <span className="text-xl text-gray-800">
