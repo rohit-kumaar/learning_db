@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useState } from "react";
 import { BsArrowLeft } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
-import { API } from "../config/config";
 
 function AddProduct() {
   const [addProduct, setAddProduct] = useState({
@@ -17,6 +16,7 @@ function AddProduct() {
     thumbnail: "",
   });
 
+  const API = "http://127.0.0.1:8080";
   const navigate = useNavigate();
 
   const handleChange = (e) => {

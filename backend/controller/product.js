@@ -60,7 +60,7 @@ const DELETE = async (req, res) => {
 
   try {
     const deleteProduct = await Product.findOneAndDelete({ _id: id });
-    res.status(301).json(deleteProduct);
+    res.status(205).json(deleteProduct);
   } catch (error) {
     res.status(400).json(error);
   }

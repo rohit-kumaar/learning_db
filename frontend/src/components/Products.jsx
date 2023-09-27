@@ -1,23 +1,38 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { AiFillEdit } from "react-icons/ai";
+import { AiFillEdit, AiTwotoneDelete } from "react-icons/ai";
 import { MdProductionQuantityLimits } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { API } from "../config/config";
 
 function Products() {
+  const API = "http://127.0.0.1:8080";
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     axios
       .get(`${API}/products`)
       .then((res) => {
+        console.log(res.data);
         setProducts(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
+
+  const handleDelete = (id) => {
+    const confirm = window.confirm("Would You Like To Delete?");
+    if (confirm) {
+      axios
+        .delete(`${API}/products/${id}`)
+        .then((res) => {
+          setProducts((prevProducts) =>
+            prevProducts.filter((product) => product._id !== id)
+          );
+        })
+        .catch((err) => console.log(err));
+    }
+  };
 
   return (
     <div className="flex flex-col gap-10">
@@ -53,13 +68,23 @@ function Products() {
                     {product.title}
                   </h1>
 
-                  <Link
-                    to={`update-product/${product._id}`}
-                    title="Update"
-                    className="p-1 text-red-700"
-                  >
-                    <AiFillEdit />
-                  </Link>
+                  <div className="flex items-center gap-3">
+                    <Link
+                      to={`update-product/${product._id}`}
+                      title="Update"
+                      className=" text-green-500"
+                    >
+                      <AiFillEdit />
+                    </Link>
+
+                    <button
+                      title="Delete"
+                      className=" text-red-500"
+                      onClick={(e) => handleDelete(product._id)}
+                    >
+                      <AiTwotoneDelete />
+                    </button>
+                  </div>
                 </div>
 
                 <p className="text-gray-600 mt-2">{product.description}</p>
