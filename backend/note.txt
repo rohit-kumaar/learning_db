@@ -1,0 +1,7 @@
+i) Build the react app
+ii) Go inside build folder
+iii) install -> npm i -g http-server
+iv) Inside build folder run -> http-server
+v) Backend server must be running
+
+
